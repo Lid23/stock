@@ -1,0 +1,20 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:eric@localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    appname: collectdata
+spring:
+  application:
+    name: collectdata
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: SPRINGCLOUD-CONFIG
+      fail-fast: true
+      username: root
+      password: eric
+      profile: dev
