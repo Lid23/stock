@@ -15,7 +15,7 @@ import java.util.*;
  * @author: Eric
  * @create: 2019-01-03 14:56
  **/
-public class TestHttp {
+public class TestXueqiu {
 
 
     // https://xueqiu.com/stock/forchartk/stocklist.json?symbol=SH600756&period=1day&type=before&begin=1478620800000&end=1510126200000&_=1510126200000
