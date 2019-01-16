@@ -1,5 +1,10 @@
 package com.noodles.collectdata.utils;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,5 +30,22 @@ public class CollectDataUtil {
         }
 
         return null;
+    }
+
+    public static String getSortParams(Map<String, String> params) {
+        Set<String> keySet = params.keySet();
+        Iterator<String> iter = keySet.iterator();
+        StringBuilder sb = new StringBuilder();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            String value = params.get(key);
+            if(StringUtils.isNotEmpty(key) && StringUtils.isNotEmpty(value)){
+                sb.append(key).append("=").append(value).append("&");
+            }
+        }
+        if (sb.length() > 0) {
+            return sb.substring(0, sb.length() - 1);
+        }
+        return "";
     }
 }

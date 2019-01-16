@@ -8,6 +8,6 @@ package com.noodles.collectdata.service;
  **/
 public interface IXueqiuCollectDataService {
 
-    public boolean getCollectDataByCode(String code);
+    public boolean getDayKDataByStockCode(String stockCode);
 
 }

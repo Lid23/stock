@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.noodles.collectdata.dao.XueqiuDayKDao">
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into XUEQIU_DAY_K_INFO (SROCK_CODE, VOLUME, OPEN, HIGH, CLOSE, LOW, CHG, PERCENT, TURNRATE, DIF,
+        DEA, MACD, LOT_VOLUME, TIMESTAMP, TIME, DAY, CREATED_DATE, UPDATED_DATE)
+        <foreach collection="list" item="item" index="index" separator="UNION ALL">
+            SELECT
+                #{item.stockCode, jdbcType=VARCHAR},
+                #{item.volume, jdbcType=INTEGER},
+                #{item.open, jdbcType=DECIMAL},
+                #{item.high, jdbcType=DECIMAL},
+            #{item.close, jdbcType=DECIMAL},
+            #{item.low, jdbcType=DECIMAL},
+            #{item.chg, jdbcType=DECIMAL},
+            #{item.percent, jdbcType=DECIMAL},
+            #{item.turnrate, jdbcType=DECIMAL},
+            #{item.dif, jdbcType=DECIMAL},
+            #{item.dea, jdbcType=DECIMAL},
+            #{item.macd, jdbcType=DECIMAL},
+            #{item.lot_volume, jdbcType=DECIMAL},
+            #{item.timestamp, jdbcType=NUMERIC},
+            #{item.time, jdbcType=VARCHAR},
+            #{item.day, jdbcType=DATE},
+            now(),
+            #{item.updatedDate, jdbcType=TIMESTAMP}
+        </foreach>
+    </insert>
+</mapper>

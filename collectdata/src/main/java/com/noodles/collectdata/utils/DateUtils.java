@@ -20,6 +20,9 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	private static String[] parsePatterns = { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy/MM/dd",
 			"yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyyMMddHHmmss", "yyyyMMdd" };
 
+	/**yyyy/MM/dd*/
+	public final static String SPLIT_DAY_STYLE = "yyyy/MM/dd";
+
 	/**yyyy-MM-dd HH:mm:ss*/
 	public final static String FULL_DATE_STYLE = "yyyy-MM-dd HH:mm:ss";
 	/**yyyy-MM-dd HH:mm*/

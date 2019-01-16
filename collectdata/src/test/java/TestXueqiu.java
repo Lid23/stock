@@ -1,12 +1,11 @@
 import com.noodles.collectdata.utils.DateUtils;
+import com.noodles.collectdata.utils.JsonUtil;
 import com.noodles.collectdata.utils.JsoupUtil;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.noodles.collectdata.vo.XueqiuDayKBean;
+import com.noodles.collectdata.vo.XueqiuDayKResult;
 import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -23,28 +22,36 @@ public class TestXueqiu {
     public static String indexUrl = "https://xueqiu.com/";
     public static String symbolUrl = "https://xueqiu.com/stock/forchartk/stocklist.json?";
     public static void main(String args[]) throws ParseException {
+        Date begin = DateUtils.parseDate("1990-01-04");
+        Date end = DateUtils.addYears(begin, 1);
+        while(DateUtils.daysBetween(end, new Date()) > 0){
+            collectData(begin, end);
+            begin = end;
+            end = DateUtils.addYears(end, 1);
+        }
+        collectData(begin, new Date());
+    }
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
+    private static void collectData(Date begin, Date end){
         Map<String, String> params = new HashMap<String, String>();
         params.put("symbol", "SH600756");
         params.put("period", "1day");
         params.put("type", "before");
-        params.put("begin", String.valueOf(df.parse(df.format(new Date())).getTime()));
-        params.put("end", String.valueOf(new Date().getTime()));
-        params.put("_", String.valueOf(new Date().getTime()));
-
-        System.out.println(params);
-
-
+        params.put("begin", String.valueOf(begin.getTime()));
+        params.put("end", String.valueOf(end.getTime()));
+        params.put("_", String.valueOf(end.getTime()));
         String url = symbolUrl.concat(getSortParams(params));
-
-        System.out.println(url);
+        //System.out.println(url);
         try {
             Map<String, String> cookies = JsoupUtil.getConnection(indexUrl).execute().cookies();
             String result = JsoupUtil.getConnection(url).
                     cookies(cookies).execute().body();
-            System.out.println("result:" + result);
+            //System.out.println("result:" + result);
+             XueqiuDayKResult xueqiuDayKResult = JsonUtil.fromJson(result, XueqiuDayKResult.class );
+            //SimpleDateFormat sdf = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.US);
+
+            List<XueqiuDayKBean> chartlist = xueqiuDayKResult.getChartlist();
+            System.out.println(JsonUtil.toJson(xueqiuDayKResult));
         } catch (Exception e) {
             e.printStackTrace();
         }
